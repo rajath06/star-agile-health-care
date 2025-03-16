@@ -16,4 +16,4 @@ spec:
         - name: health-me-app
           image: rajath06/health-me-app:4.0
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
