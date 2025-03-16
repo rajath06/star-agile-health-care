@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-me-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: health-me-app
+  template:
+    metadata:
+      labels:
+        app: health-me-app
+    spec:
+      containers:
+        - name: health-me-app
+          image: rajath06/health-me-app:4.0
+          ports:
+            - containerPort: 8080
