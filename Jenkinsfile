@@ -4,16 +4,13 @@ pipeline {
   environment {
     M2_HOME = '/usr/share/maven'
     PATH = "$M2_HOME/bin:$PATH"
-    DOCKER_IMAGE = "rajath06/healthcare-app:1.0"
-    KUBE_CONFIG = "/home/ubuntu/.kube/config"
   }
 
   stages {  
-    stage('Install Dependencies') {
+    stage('Install Maven') {
       steps {
-        sh 'sudo apt update && sudo apt install -y maven docker.io'
+        sh 'sudo apt update && sudo apt install -y maven'
         sh 'mvn -version'
-        sh 'docker --version'
       }
     }
 
@@ -35,7 +32,7 @@ pipeline {
 
     stage('Create a Docker Image') {
       steps {
-        sh 'docker build -t rajath06/healthcare-app:1.0 .'
+        sh 'docker build -t rajath06/health-me-app:4.0 .'
       }
     }
 
@@ -49,17 +46,7 @@ pipeline {
 
     stage('Push the Docker Image') {
       steps {
-        sh 'docker push rajath06/healthcare-app:1.0'
-      }
-    }
-
-    stage('Deploy to Kubernetes') {
-      steps {
-        echo 'Deploying to Kubernetes Cluster...'
-        withKubeConfig([credentialsId: 'kubeconfig', serverUrl: 'https://your-k8s-master-ip:6443']) {
-          sh 'kubectl apply -f k8s/deployment.yaml'
-          sh 'kubectl apply -f k8s/service.yaml'
-        }
+        sh 'docker push rajath06/health-me-app:4.0'
       }
     }
 
@@ -69,13 +56,14 @@ pipeline {
         installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible.yml', vaultTmpPath: ''
       }
     }
-
-    stage('Verify Deployment') {
-      steps {
-        echo 'Checking Kubernetes deployment status...'
-        sh 'kubectl get pods'
-        sh 'kubectl get services'
-      }
-    }
   }
 }
+
+
+
+
+
+
+
+
+
