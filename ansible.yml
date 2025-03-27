@@ -26,7 +26,7 @@
         append: yes
 
     - name: Pull Docker image
-      command: docker pull rajath06/health-me-app:4.0:latest
+      command: docker pull rajath06/health-me-app:4.0
 
     - name: Run Docker container
-      command: docker run -itd -p 8084:8082 --name star-agile-app rajath06/health-me-app:4.0:latest
+      command: docker run -itd -p 8084:8082 --name star-agile-app rajath06/health-me-app:4.0
